@@ -1,0 +1,26 @@
+def quantile_model_params(y_var,x_var,quantile_list = [.5,.95],training_data):
+    
+    #Package dependencies
+    import patsy
+    import numpy as np
+    import pandas as pd
+    import statsmodels.api as sm
+    import statsmodels.formula.api as smf
+    from statsmodels.regression.quantile_regression import QuantReg
+
+    #Embed function to fit quantile regression using StatsModel in api formula form
+    def quantile_model_param(y_var,x_var,training_data,q):
+        res = smf.quantreg(y_var+' ~ '+x_var, training_data).fit(q=q)
+        return res.params
+    
+    #Create a dataframe of the required quantiles to later merge with the model params
+    quantile_index = pd.DataFrame(quantile_list, columns = ["Quantile"]) 
+    
+    #Loop through the quantile regression model using the provided quantile index 
+    model_temp = pd.DataFrame([quantile_model_param(y_var,x_var,training_data,q = x) 
+                               for x in quantile_index["Quantile"]])
+    
+    #merge the two dtaframes
+    models = quantile_index.merge(model_temp,right_index=True,left_index=True)
+    models = models.set_index(["Quantile"])
+    return models

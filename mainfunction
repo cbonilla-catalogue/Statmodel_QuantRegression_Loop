@@ -20,7 +20,7 @@ def quantile_model_params(y_var,x_var,quantile_list = [.5,.95],training_data):
     model_temp = pd.DataFrame([quantile_model_param(y_var,x_var,training_data,q = x) 
                                for x in quantile_index["Quantile"]])
     
-    #merge the two dtaframes
+    #merge the two dataframes
     models = quantile_index.merge(model_temp,right_index=True,left_index=True)
     models = models.set_index(["Quantile"])
     return models

@@ -1,4 +1,4 @@
-def quantile_model_params(y_var,x_var,quantile_list = [.5,.95],training_data):
+def quantile_model_params(y_var,x_var,training_data,quantile_list = [.5,.95]):
     
     #Package dependencies
     import patsy

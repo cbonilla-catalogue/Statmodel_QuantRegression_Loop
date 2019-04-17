@@ -18,8 +18,8 @@ get_ipython().magic('matplotlib inline')
 current_palette = sns.color_palette()
 
 # In[2]:
-data = pd.read_csv("C:\\Users\\Carlos Bonilla\\Google Drive\\Investment Research\\HF Index Performance.csv",
-                   header = 0,index_col = 'Date')
+url = 'https://raw.githubusercontent.com/cbonilla-catalogue/Statmodel_QuantRegression_Loop/master/HF%20Index%20Performance%20v0.2.csv'
+data = pd.read_csv(url, header = 0, index_col='Date')
 
 # In[10]:
 x = data.pct_change(periods = 3).HFRIFOF
